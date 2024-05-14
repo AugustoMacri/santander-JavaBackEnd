@@ -13,5 +13,7 @@ public class NovoUsuario {
         double altura = sc.nextDouble();
 
         System.out.println("Olá " + nome + ", sua idade é " + idade + " com altura " + altura);
+
+        sc.close();
     }
 }
