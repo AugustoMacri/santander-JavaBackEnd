@@ -1,0 +1,9 @@
+/*
+ * - Collection Framework é uma estrutura de dados que serve para agrupar muitos elementos em uma única unidade, estes elementos precisão ser Objetos
+ * - Uma Collection pode ter oleções homogêneas e heterogêneas, normalmente utilizamos coleções homogêneas de um loop específco
+ * - O núcle principal das coleções é formado pelas interfaces, essas interfaces permitem manipular a coleção independente do nível de detalhes que elas representam
+ * - Temos quatro grandes tipos de coleções: List, Set, Queue e Map, a partir dessas interfaces, temos muitas subclasses concretas que implementam várias formas diferentes de
+ * se trabalhar com cada coleção
+ * - Todas as interfaces e classes são encontradas em java.util
+ * - Embora a interface Map não ser filha direta de collection, ela também é considerada uma coleção devido a sua função
+ */
