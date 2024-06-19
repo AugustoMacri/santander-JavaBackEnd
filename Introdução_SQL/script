@@ -1,0 +1,133 @@
+--Script das aulas de Introdução a SQL 
+--O seguinte script foi realizado em postgreSQL
+
+--Aula 1: Criação das tabelas do banco de dados
+create table usuarios(
+	id int,
+	nome varchar(255) not null,
+	email varchar(255) not null unique,
+	data_nascimento date not null,
+	endereco varchar(100) not null);
+
+--Aula 2: Operaçoes CRUD insert e select
+select * from usuarios u 
+insert into usuarios (id, nome, email, data_nascimento, endereco) values (11, 'augusto2', 'teste11', '2003-10-10', 'rua borborema')
+insert into usuarios (id, nome, email, data_nascimento, endereco) values (2, 'augusto22', 'teste121', '2003-10-10', 'rua borborema')
+insert into usuarios (id, nome, email, data_nascimento, endereco) values (3, 'augusto33', 'teste333', '2003-10-10', 'rua borborema')
+
+
+--Aula 3: Comandos 
+delete from usuarios where nome = 'augusto2'
+
+
+--Aula 4: Alterando e Excluindo tabelas 
+create table usuarios_novos(
+	id int,
+	nome varchar(255) not null,
+	email varchar(255) not null unique,
+	data_nascimento date not null,
+	endereco varchar(100) not null);
+
+insert into usuarios_novos (id, nome, email, data_nascimento, endereco)
+select id, nome, email, data_nascimento, endereco
+from usuarios 
+
+drop table usuarios
+
+ALTER TABLE usuarios_novos RENAME TO usuarios;
+
+alter table usuarios alter column nome type varchar(200) --mudar uma coluna especifica
+
+select * from usuarios u 
+
+--Aula 5: Chaves Primárias e Estrangeiras
+--usuarios
+CREATE SEQUENCE usuarios_id_seq; --Criaar sequencia
+
+ALTER TABLE usuarios ALTER COLUMN id SET DEFAULT nextval('usuarios_id_seq'); -- Alterar coluna para usar essa sequencia
+
+ALTER TABLE usuarios ADD PRIMARY KEY (id); --fazer a coluna id virar a pk
+
+select * from usuarios u 
+
+--destinos
+create sequence destinos_id_seq;
+alter table destinos alter column id set default  nextval('destinos_id_seq');
+alter table destinos add primary key (id);
+
+select * from destinos d 
+
+--reservas
+create sequence reservas_id_seq;
+alter table reservas alter column id set default  nextval('reservas_id_seq');
+alter table reservas add primary key (id)
+
+select * from reservas r 
+
+ALTER TABLE reservas 
+ADD CONSTRAINT fk_reservas_usuarios
+FOREIGN KEY(id_usuario) REFERENCES usuarios(id);
+
+ALTER TABLE reservas 
+ADD CONSTRAINT fk_reservas_destinoss
+FOREIGN KEY(id_destino) REFERENCES destinos(id);
+
+insert into reservas (id_usuario, id_destino, data) values (2, 2, '2024-11-11')
+
+alter table reservas 
+add constraint fk_reservas_usuarios 
+foreign key(id_usuario) references usuarios(id)
+on delete cascade;
+
+ALTER TABLE reservas
+DROP CONSTRAINT fk_reservas_usuarios;
+
+--Aula 6: Normalização de Dados
+
+alter table usuarios 
+add rua varchar (100),
+add numero varchar(10),
+add cidade varchar(50),
+add estado varchar(20);
+
+--Tinha colocado apenas o nome da rua no endereco, por isso nome, cidade e estado está em branco
+UPDATE usuarios
+SET rua = split_part(endereco, ',', 1),
+    numero = split_part(endereco, ',', 2),
+    cidade = split_part(endereco, ',', 3),
+    estado = split_part(endereco, ',', 4);
+   
+alter table usuarios 
+drop column endereco;
+
+
+select * from usuarios u 
+
+--Aula 7: Consultas avançadas
+select * from reservas
+select * from usuarios 
+
+select * from usuarios 
+inner join reservas on usuarios.id = reservas.id
+
+select * from usuarios 
+left join reservas on usuarios.id = reservas.id
+
+select * from usuarios 
+right join reservas on usuarios.id = reservas.id
+
+select * from destinos
+where id not in (select id_destino from reservas r)
+
+
+
+
+
+
+
+
+
+
+
+
+
