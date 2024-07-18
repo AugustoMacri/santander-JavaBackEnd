@@ -4,16 +4,16 @@ import jakarta.persistence.*;
 
 import java.util.List;
 
-@Entity(name = "tb_user")
+@Entity(name = "tb_user") //Indica que a classe é uma entidade. Ou seja, a classe será mapeada para uma tabela do bd
 public class User {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id //Chave primária da identidade
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //Define como o valor do identificador sera gerado. GenerationType permite que o jpa escolha a estratégia de geração mais apropriada
     private Long id;
 
     private String name;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL) //Relação de um para um no banco de dados
     private Account account;
 
     @OneToOne(cascade = CascadeType.ALL)
